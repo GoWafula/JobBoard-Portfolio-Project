@@ -12,6 +12,9 @@ class Employer(models.Model):
     company_name = models.CharField(max_length=1000)
     company_description = models.TextField(max_length=2000)
 
+    def __str__(self):
+        return self.company_name
+
 
 
 class Job(models.Model):
