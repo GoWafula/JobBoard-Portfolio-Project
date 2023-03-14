@@ -2,7 +2,7 @@
 Job Board Web Application using Django
 
 ## Installation
-1. Clone the repository:`git clone https://github.com/djangocoder101/Job-Board-portfolio-Project`
+1. Clone the repository:`git clone https://github.com/djangocoder101/JobBoard-Portfolio-Project`
 2. Create a virtual environment and activate it:`python3 -m venv env
 source env/bin/activate
 `
