@@ -1,0 +1,20 @@
+
+<form method="get" action="{% url 'job_search' %}">
+    <input type="text" name="q" placeholder="Search for jobs...">
+    <button type="submit">Search</button>
+</form>
+
+{% if jobs %}
+    <ul>
+    {% for job in jobs %}
+        <li>{{ job.job_title }}</li>
+        <li>{{ job.location }}</li>
+        <li>{{ job.company }}</li>
+        <li>{{job.description}}</li>
+        <li>{{ job.salary}}</li>
+
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No jobs found.</p>
+{% endif %}
