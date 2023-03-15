@@ -12,6 +12,9 @@
         <li>{{ job.company }}</li>
         <li>{{job.description}}</li>
         <li>{{ job.salary}}</li>
+        <li>{{ job.contract}}</li>
+        <li>{{ job.posted_at }}</li>
+       <li> <a href="{{ job.application_link }}">{{ job.url_text }}</a> Apply here </li>
 
     {% endfor %}
     </ul>

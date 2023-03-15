@@ -1,30 +1,32 @@
-from django.shortcuts import render,redirect,HttpResponse
+from django.shortcuts import render,redirect,HttpResponse,get_object_or_404
 from .models import Job
 from .forms import JobForm
+from django.core.paginator import Paginator
 # Create your views here.
+
+
 # a function view to display the jobs list
 def job_list(request):
-    jobs = Job.objects.all()
+    job = Job.objects.order_by('-posted_at')
+
+    paginator = Paginator(job,2)
+    page_number = request.GET.get('page')
+    paged_jobs = paginator.get_page(page_number)
+    
 
     context = {
-        'jobs':jobs,
+        'job':paged_jobs,
     }
-    return render(request, 'jobs/job_list.html', context)
+    return render(request, 'jobs/job.html', context)
 
-def post_job(request):
-    if request.method == 'POST':
-        form = JobForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('jobs')
-        else:
-            form = JobForm
-            context = {
-                'form':form
-            }
-        return render(request, 'jobs/post_job.html', context)
-    return HttpResponse()
-    
+def single_job(request, job_id):
+    single_job = get_object_or_404(Job,pk=job_id)
+
+    context = {
+        'single_job':single_job
+    }
+    return render(request, 'jobs/single_job.html')
+
 #added a job search functionality
 from django.db.models import Q #performs advanced searches than filter and exclude, ncan also be used with &, AND
 
@@ -53,3 +55,71 @@ def search(request):
         context['error'] = f"No jobs found for '{query}'"
 
     return render(request, 'jobs/job_search.html', context)
+
+
+# Views to create,update and delete a job by the employer and admin
+
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def employer_dashboard(request):
+    employer = request.user.employer
+    # Get all job postings associated with the logged-in employer
+    jobs = Job.objects.filter(employer=employer)
+    return render(request, 'jobs/employer_dashboard.html', {'jobs': jobs})
+
+
+def job_detail(request, pk):
+    job = get_object_or_404(Job, pk=pk)
+    
+    # Check if the current user is the employer who created the job posting
+    if job.employer != request.user:
+        return redirect('employer_dashboard')
+    
+    # If the request method is POST, process the form data
+    if request.method == 'POST':
+        form = JobForm(request.POST, instance=job)
+        if form.is_valid():
+            form.save()
+            return redirect('job_detail', pk=pk)
+    
+    # If the request method is GET, display the job posting details and form
+    else:
+        form = JobForm(instance=job)
+        
+    return render(request, 'jobs/job_detail.html', {'job': job, 'form': form})
+
+
+
+@login_required(login_url="login")
+def create_job(request):
+    if request.method == 'POST':
+        form = JobForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('job_detail')
+    else:
+        form = JobForm
+    return render(request, 'jobs/post_job.html', {'form': form})
+
+# Views to create,update and delete a job by the employer and admin
+def update_job(request,pk):
+    job = get_object_or_404(Job,pk = pk)
+    if request.method == 'POST':
+        form = JobForm(request.POST, instance=job)
+        if form.is_valid():
+            form.save()
+            return redirect('job_detail', pk = job.pk)
+    else:
+        form = JobForm(instance=job)
+    return render(request, 'jobs/job_update.html', {'form': form})
+
+# Views to create,update and delete a job by the employer and admin
+def job_delete(request, pk):
+    job = get_object_or_404(Job, pk=pk)
+    if request.method == 'POST':
+        job.delete()
+        return redirect('job_post_list')
+    return render(request, 'jobs/job_delete.html', {'job': job})
+
+    

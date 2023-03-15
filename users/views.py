@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
-from django.contrib import messages
+from django.contrib import messages,auth
 from django.contrib.auth import login,logout,authenticate
 
 # Create your views here.
@@ -13,7 +13,7 @@ def login(request):
     page = 'login'
 
     if request.user.is_authenticated:
-        return redirect('jobs')
+        return redirect('job_list')
     
     if request.method == 'POST':
         username = request.POST['username']
@@ -27,14 +27,15 @@ def login(request):
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
-            login(request,user)
-            return redirect(request.GET['next'] if 'next' in request.GET else 'account')
+            auth.login(request,user)
+            messages.success(request,"You are now logged in!")
+            return redirect('job_list')
         else:
             messages.error(request, "username or password is invalid")
     return render(request,'users/login.html')
 
-def logout(request):
-    logout(request)
+def log_out(request):
+    auth.logout(request)
     messages.info(request,'user was logged out')
     return redirect (login)
 
@@ -61,5 +62,4 @@ def register(request):
         'form': form
         }
     return render(request, 'users/register.html',context)
-
 

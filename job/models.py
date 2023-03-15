@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from urllib.parse import urlparse
 
 # Create your models here.
 
@@ -39,4 +40,8 @@ class Job(models.Model):
 
     def __str__(self):
         return self.job_title
+    
+    def url_text(self):
+        parsed_url = urlparse(self.application_link)
+        return parsed_url.hostname.replace("www.", "") + "/..."
     

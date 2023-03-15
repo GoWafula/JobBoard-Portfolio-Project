@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <title>Job Board - Employer Dashboard</title>
+  {% load crispy_forms_tags %}
+  
+    <h1>Employer Dashboard</h1>
+    
+    <h2>Create a New Job Posting</h2>
+    <form method="post" action="{% url 'create_job' %}">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit">Create Job Posting</button>
+    </form>
+    
+    <h2>Your Job Postings</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Location</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for job in jobs %}
+          <tr>
+            <td>{{ job.job_title }}</td>
+            <td>{{ job.description }}</td>
+            <td>{{ job.location }}</td>
+            <td>
+              <a href="{% url 'update_job' job.id %}">Edit</a>
+              <a href="{% url 'job_delete' job.id %}">Delete</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="4">You have not created any job postings yet.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+{% endblock %}
+
