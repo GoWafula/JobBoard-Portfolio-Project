@@ -34,8 +34,10 @@ class Job(models.Model):
 
     contract = models.CharField(choices=contract_type, max_length=100, default=None)
     salary = models.DecimalField(max_digits=10, decimal_places=2)
+    #application_deadline = models.DateField()
     posted_at = models.DateTimeField(auto_now_add=True)
     application_link = models.URLField()
+
    
 
     def __str__(self):

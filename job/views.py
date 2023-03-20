@@ -37,6 +37,7 @@ def search(request):
         # Handle empty query
         jobs = []
     else:
+       
         jobs = Job.objects.filter(
             Q(job_title__icontains=query) | 
             Q(company__icontains=query) |
@@ -96,8 +97,9 @@ def create_job(request):
     if request.method == 'POST':
         form = JobForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('job_detail')
+            job =form.save(commit=False)
+            job.save()
+            return redirect('job_detail',pk=job.pk)
     else:
         form = JobForm
     return render(request, 'jobs/post_job.html', {'form': form})
@@ -115,11 +117,13 @@ def update_job(request,pk):
     return render(request, 'jobs/job_update.html', {'form': form})
 
 # Views to create,update and delete a job by the employer and admin
+@login_required(login_url="login")
 def job_delete(request, pk):
-    job = get_object_or_404(Job, pk=pk)
+    profile = request.user
+    job = get_object_or_404(Job, id=pk)
     if request.method == 'POST':
         job.delete()
-        return redirect('job_post_list')
+        return redirect('employer_dashboard')
     return render(request, 'jobs/job_delete.html', {'job': job})
 
     

@@ -1,8 +1,13 @@
+{% extends 'base.html' %}
 
-<form method="get" action="{% url 'job_search' %}">
+
+{% block content %}
+<section class="search">
+<form method="get" class="form" action="{% url 'job_search' %}">
     <input type="text" name="q" placeholder="Search for jobs...">
     <button type="submit">Search</button>
 </form>
+</section>
 
 {% if jobs %}
     <ul>
@@ -21,3 +26,7 @@
 {% else %}
     <p>No jobs found.</p>
 {% endif %}
+
+
+
+{% endblock %}

@@ -4,7 +4,9 @@
     <h1>Job Listings</h1>
     {% for job in jobs %}
         <div>
+
             <h2>{{ job.job_title }}</h2>
+            <p>{{ job.Employer}}</p>
             <p>{{ job.description }}</p>
             <p>{{ job.requirements }}</p>
             <p>{{ job.location }}</p>

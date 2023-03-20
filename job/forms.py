@@ -5,4 +5,4 @@ class JobForm(forms.ModelForm):
     
     class Meta:
         model = Job
-        fields = ('job_title', 'description', 'requirements', 'location', 'company', 'salary')
+        fields = ('employer','job_title', 'description', 'requirements', 'location', 'company', 'salary', 'contract','application_link')
