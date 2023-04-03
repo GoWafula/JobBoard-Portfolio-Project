@@ -18,3 +18,13 @@ urlpatterns += [
     path('job_delete/<int:pk>/', views.job_delete, name='job_delete'),
     path('job_detail/<int:pk>/',views.job_detail, name = 'job_detail')
 ]
+
+# API URLS
+urlpatterns += [
+    path('employers/', views.EmployerList.as_view()),
+    path('employers/<int:pk>/', views.EmployerDetail.as_view()),
+    path('jobs/', views.JobList.as_view()),
+    path('jobs/<int:pk>/', views.JobDetail.as_view()),
+    path('jobs/', views.JobRead.as_view()),
+    path('jobs/<int:pk>/', views.JobDelete.as_view()),
+]

@@ -4,44 +4,54 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InternHUB</title>
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,700;1,600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css">
+    <title>Internship Opportunities</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <section class="header">
+    <header>
+        <h1>internHUB</h1>
         <nav>
-            <a href="index.html"><img src="images/logo.png" alt="Logo"></a>
-            <div class="nav-links" id="navLinks">
-             <i class="fa fa-times" onclick="hideMenu()"></i>
-                <ul>
-                  <li> <a href="">Home</a></li>
-                  <li> <a href="">Jobs</a></li>
-                  <li> <a href="">About</a></li>
-                  <li> <a href="">Blog</a></li>
-                  <li> <a href="">Login</a></li>
-                </ul>
-            </div>
-            <i class="fa fa-bars" onclick="showMenu()" ></i>
-          </nav>
-    </section>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Jobs</a></li>
+            <li><a href="#">Employers</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </nav>
+      </header>
+      <main>
+        <section>
+            <h2>Welcome to Job Website</h2>
+            <p>Find your dream job or post a job opening for your company.</p>
+            <button><a href="search.html">Find a Job</a></button>
+            <button><a href="add_jobs.html">Post a job</a></button>
+        </section>
+
+        <section>
+            <h2>Featured Jobs</h2>
+            <ul>
+              <li>
+                <h3>Software Engineer</h3>
+                <p>Company A is seeking a software engineer with 5+ years of experience.</p>
+                <button>Apply Now</button>
+              </li>
+              <li>
+                <h3>Marketing Manager</h3>
+                <p>Company B is seeking a marketing manager with 7+ years of experience.</p>
+                <button>Apply Now</button>
+              </li>
+              <li>
+                <h3>Accountant</h3>
+                <p>Company C is seeking an accountant with 3+ years of experience.</p>
+                <button>Apply Now</button>
+              </li>
+            </ul>
+          </section>
+      </main>
+
+      <footer>
+        <p>&copy; 2023 Kevin Wafula. All rights reserved.</p>
+      </footer>
 </body>
-
-<script>
-
-    var navLinks = document.getElementById("navLinks");
-  
-    function showMenu(){
-      navLinks.style.right = "0";
-    }
-  
-    
-    function hideMenu(){
-      navLinks.style.right = "-200px";
-    }
-  
-  </script>
 </html>

@@ -117,6 +117,7 @@ def update_job(request,pk):
     return render(request, 'jobs/job_update.html', {'form': form})
 
 # Views to create,update and delete a job by the employer and admin
+
 @login_required(login_url="login")
 def job_delete(request, pk):
     profile = request.user
@@ -126,4 +127,35 @@ def job_delete(request, pk):
         return redirect('employer_dashboard')
     return render(request, 'jobs/job_delete.html', {'job': job})
 
-    
+
+
+# API Views
+
+from rest_framework import generics
+from .serializers import EmployerSerializer,JobSerializer
+from .models import Employer,Job
+
+class EmployerList(generics.ListCreateAPIView):
+    queryset = Employer.objects.all()
+    serializer_class = EmployerSerializer
+
+class EmployerDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Employer.objects.all()
+    serializer_class = EmployerSerializer
+
+class JobList(generics.ListCreateAPIView):
+    queryset = Job.objects.all()
+    serializer_class = JobSerializer
+
+class JobDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Job.objects.all()
+    serializer_class = JobSerializer
+
+class JobRead(generics.RetrieveAPIView):
+    queryset = Job.objects.all()
+    serializer_class = JobSerializer
+
+
+class JobDelete(generics.DestroyAPIView):
+    queryset = Job.objects.all()
+    serializer_class = JobSerializer
