@@ -4,6 +4,10 @@ from .forms import JobForm
 from django.core.paginator import Paginator
 # Create your views here.
 
+#landing page
+def home(request):
+    return render(request,'jobs/index.html')
+
 
 # a function view to display the jobs list
 def job_list(request):
@@ -19,13 +23,12 @@ def job_list(request):
     }
     return render(request, 'jobs/job.html', context)
 
-def single_job(request, job_id):
-    single_job = get_object_or_404(Job,pk=job_id)
 
-    context = {
-        'single_job':single_job
-    }
-    return render(request, 'jobs/single_job.html')
+def job_detail(request, pk):
+    # Retrieve the job with the given job_id or return a 404 error
+    job = get_object_or_404(Job, pk = pk)
+    # Render the job_detail.html template with the job object
+    return render(request, 'jobs/single_job.html.html', {'job': job})
 
 #added a job search functionality
 from django.db.models import Q #performs advanced searches than filter and exclude, ncan also be used with &, AND

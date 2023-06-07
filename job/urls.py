@@ -3,9 +3,9 @@ from . import views
 
 # urls to display and search for jobs
 urlpatterns =[
-    path('', views.job_list, name = 'job_list'),
+    path('',views.home, name = 'home'),
     path('job_search/', views.search, name = 'job_search'),
-    path('single_job/', views.single_job, name = 'single_job')
+    path('job_detail/<int:pk>/', views.job_detail, name = 'job_detail')
 
 ]
 
@@ -16,9 +16,9 @@ urlpatterns += [
     path('create_job/', views.create_job, name='create_job'),
     path('update_job/<int:pk>/', views.update_job, name='update_job'),
     path('job_delete/<int:pk>/', views.job_delete, name='job_delete'),
-    path('job_detail/<int:pk>/',views.job_detail, name = 'job_detail')
+    #path('job_detail/<int:pk>/',views.job_detail, name = 'job_detail')
 ]
-
+'''
 # API URLS
 urlpatterns += [
     path('employers/', views.EmployerList.as_view()),
@@ -28,3 +28,4 @@ urlpatterns += [
     path('jobs/', views.JobRead.as_view()),
     path('jobs/<int:pk>/', views.JobDelete.as_view()),
 ]
+'''

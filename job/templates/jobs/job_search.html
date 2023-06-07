@@ -3,30 +3,30 @@
 
 {% block content %}
 <section class="search">
-<form method="get" class="form" action="{% url 'job_search' %}">
+  <h2>Find a Job</h2>
+  <form method="get" class="form" action="{% url 'job_search' %}">
     <input type="text" name="q" placeholder="Search for jobs...">
     <button type="submit">Search</button>
 </form>
 </section>
 
+
+<section>
 {% if jobs %}
     <ul>
     {% for job in jobs %}
-        <li>{{ job.job_title }}</li>
-        <li>{{ job.location }}</li>
-        <li>{{ job.company }}</li>
-        <li>{{job.description}}</li>
-        <li>{{ job.salary}}</li>
-        <li>{{ job.contract}}</li>
-        <li>{{ job.posted_at }}</li>
-       <li> <a href="{{ job.application_link }}">{{ job.url_text }}</a> Apply here </li>
-
+        <li>
+          <h3>{{ job.job_title }}, {{ job.company }}</h3>
+          <p>{{job.description}}</p>
+          <p>{{ job.location }}</p>
+          <button><a href="{{ job.application_link }}">Apply here</a></button>
+        </li>
     {% endfor %}
     </ul>
 {% else %}
     <p>No jobs found.</p>
 {% endif %}
 
-
+</section>
 
 {% endblock %}
